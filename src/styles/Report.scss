@@ -1,0 +1,46 @@
+.wrap-report-page{
+    display: flex;
+    width: 95%;
+    height: 80%;
+    
+    margin: 20px auto;
+    .form-report{
+        width: 40%;
+        // border: 1px solid;
+        .block-reporter{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            .select-reporter{
+                width: 50%;
+            }
+        }
+        .block-reported{
+            display: flex;
+            flex-direction: column;
+            
+          
+            .radio-sel{
+                display: flex;
+                flex-direction: column;
+                height: 250px;
+                justify-content: space-around;
+            }
+            .message{
+                width: 90%;
+            
+            }
+        }
+
+    }
+    .form-right{
+        width: 50%;
+        background-color: #9e9e9e;
+        margin-left: auto;
+        border-radius: 20px;
+        
+    }
+}
+span.title{
+    margin: 20px 0px
+}

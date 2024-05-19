@@ -10,7 +10,7 @@ import {
 } from "@ant-design/icons";
 
 import { Button, Menu } from "antd";
-import {useNavigate} from "react-router-dom"
+import {useNavigate,useLocation} from "react-router-dom"
 import "@/styles/SideBar.scss";
 import linkimg from "@/assets/lotus.png"
 const items = [
@@ -45,10 +45,16 @@ const items = [
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate()
+  const location = useLocation()
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  
+  const [current,setCurrent] = React.useState("/")
+ React.useEffect(()=>{
+  if(location.pathname){
+   setCurrent(location.pathname)
+  }
+ },[location.pathname])
   return (
     <div
      className="wrap-sidebar"
@@ -66,6 +72,7 @@ const SideBar = () => {
       </Button>
       <Menu
         defaultSelectedKeys={["/"]}
+        selectedKeys={[current]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
         theme="dark"

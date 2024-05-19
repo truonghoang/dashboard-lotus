@@ -1,4 +1,4 @@
-import { put, select, takeEvery ,takeLatest} from 'redux-saga/effects';
+import { put, takeEvery ,takeLatest} from 'redux-saga/effects';
 import Swal from 'sweetalert2';
 import {listReport,detailReport} from "@/apis/report"
 import * as actions from '../reducers/Report';
@@ -28,7 +28,16 @@ function* listReportSaga({ payload }) {
 }
 
 function* detailReportSaga ({payload}){
-
+try {
+    const res = yield detailReport(payload)
+    if(res.code == 0){
+        yield put(actions.requestFailure(res.message))
+    }else{
+        yield put(actions.detailReportSuccess(res.response))
+    }
+} catch (error) {
+    yield put(actions.requestFailure(error))
+}
 }
 
 

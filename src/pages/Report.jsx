@@ -5,9 +5,7 @@ function Report() {
   return (
     <div className='wrap-report-page'>
     <Form/>
-    <div className='form-right'>
-
-    </div>
+   
     </div>
   )
 }

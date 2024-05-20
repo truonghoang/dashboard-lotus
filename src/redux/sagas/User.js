@@ -57,8 +57,13 @@ function* detailUserSaga({ payload }) {
     if (res.code == 0) {
       yield put(actions.requestFailure(res.message))
     } else {
-
-      yield put(actions.detailUserSuccess(res.response))
+      const dataDetail = res.response
+      const information = {
+             Name : `${dataDetail.lastName} ${dataDetail.firstName}`,
+             Phone: dataDetail.phone,
+             Email:dataDetail.email,
+          }
+      yield put(actions.detailUserSuccess(information))
     }
   } catch (error) {
     yield put(actions.requestFailure(error))

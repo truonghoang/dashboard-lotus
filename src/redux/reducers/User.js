@@ -8,9 +8,9 @@ const initialState = {
   error: false,
   errMess: null,
   page: 1,
-  limit:20,
+  limit:10,
   select:[],
-  data:[]
+  data:[],totalPage:1
  
 };
 
@@ -40,7 +40,8 @@ const userSlice = createSlice({
       state.isLoading = false,
       state.data =action.payload.data,
       state.page =action.payload.page,
-      state.limit =action.payload.limit
+      state.limit =action.payload.limit,
+      state.totalPage = action.payload.totalPage
     },
     detailUserRequest: (state)=>{
       state.isLoading =true

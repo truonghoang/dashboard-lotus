@@ -7,7 +7,7 @@ import DetailForm from "../common/DetailForm";
 import * as actions from "../../redux/reducers/Report"
 export const ReportTable = (props) => {
   const [open, setOpen] = React.useState(false)
-  const [detail, setDetail] = React.useState({})
+ 
   
   const columns = [
     {
@@ -51,7 +51,7 @@ export const ReportTable = (props) => {
 
           props.getDetail({ id: record.id })
           setOpen(true)
-        }} style={{ color: "#2196f3", cursor: "pointer" }} /></Col><Col span={5}> <Popconfirm
+        }} style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }} /></Col><Col span={5}> <Popconfirm
           title="Delete the report"
           description="Are you sure to delete this report?"
           onConfirm={() => {
@@ -60,7 +60,7 @@ export const ReportTable = (props) => {
           okText="Yes"
           cancelText="No"
         >
-          <DeleteOutlined style={{ color: "#ff7043", cursor: "pointer" }} />
+          <DeleteOutlined style={{ color: "#ff7043", cursor: "pointer" ,fontSize:20}} />
         </Popconfirm>
           </Col></Row>
 

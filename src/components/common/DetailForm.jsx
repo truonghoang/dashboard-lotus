@@ -24,7 +24,7 @@ function DetailForm({ title = "DETAIL", item = {},open=false,onOpen =()=>{} , on
                 {
                     result.map(([key, value], index) => {
                         return (
-                            <Row style={{ margin: "10px 0px" }} key={index}> <Col span={8}>{key}</Col> <Col span={14}>{value}</Col><Col span={1}><CopyOutlined className='copy-icon' onClick={() => {
+                            <Row style={{ margin: "10px 0px" }} key={index}> <Col span={8} style={{fontWeight:500,color:"#424242"}}>{key}</Col> <Col span={14}>{value}</Col><Col span={1}><CopyOutlined className='copy-icon' onClick={() => {
                                 navigator.clipboard.writeText(value).then(() => {
                                     messageApi.open({
                                         type: 'success',

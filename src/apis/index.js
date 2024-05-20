@@ -4,9 +4,9 @@ if (process.env.NODE_ENV == 'production') {
   baseURL = 'https://adminplayer.sohatv.vn';
 } else if (process.env.NODE_ENV == 'development') {
 
-  baseURL ='http://localhost:8080'
+  baseURL ='http://localhost:80'
 } else {
-    baseURL = 'http://localhost:8080';
+    baseURL = 'http://localhost:80';
 
 }
 const handleResult = (data) => {

@@ -40,13 +40,13 @@ export const UserTable = (props) => {
       title: "Phone",
       dataIndex: "phone",
       align: "center",
-      key: "reported_name",
+      key: "phone",
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "Reason",
+      dataIndex: "reason_label",
       align: "center",
-      key: "phone_reporter",
+      key: "reason",
     },
     {
       title: "Action",
@@ -71,41 +71,44 @@ export const UserTable = (props) => {
     },
   ];
   const [open, setOpen] = React.useState(false)
+  const reasons = [{
+    
+  }]
   const location = useLocation()
-  const onShowDetail = () => {
-    setOpen(!open)
-  }
-  const onClose = () => {
-    setOpen(false)
-    props.closeForm()
-  }
+ 
+ 
   React.useEffect(() => {
-    if (location.search){
-     
-      console.log( location.state)
-      // props.getUser({})
-    }
-    props.getUser({ page: 1, limit: 10 });
+    
+   const path= location.pathname.split("/")
+    props.reportUser({ page: 1, limit: 10,id:path[3] });
   }, []);
 
   const dataResource = React.useMemo(() => {
     return props.store.data.map((item, index) => {
+        let reason_label
+     
+      if (item.reason==0){
+        reason_label="Spam"
+      }else if(item.reason==1){
+        reason_label="Tin rác"
+      }
       return {
         ...item,
-        fullName: `${item.firstName}  ${item.lastName}`,
-        index: (props.store.page - 1) * props.store.limit + index + 1,
+        fullName: `${item.first_name}  ${item.last_name}`,
+        reason_label: reason_label,
+        index:  index + 1,
       };
     });
   }, [props.store.data, props.store.limit, props.store.page]);
   return (
     <div>
-     <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={props.store.detail} title="DETAIL USER INFORMATION" />
+    
       <TableCommon
         columns={columns}
         pageSize={props.store.limit}
         totalPage={props.store.totalPage}
         data={dataResource}
-        onChangePage={(page,limit)=>{ props.getUser({page,limit})}}
+        onChangePage={(page,limit)=>{ props.reportUser({page,limit})}}
       />
     </div>
   );
@@ -119,12 +122,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: (data) => {
-      dispatch(actions.listUserRequest(data));
+    reportUser: (data) => {
+      dispatch(actions.listReportUserRequest(data));
     },
-    getDetail:(data)=>{
-      dispatch(actions.detailUserRequest(data))
-    }
+    
   };
 };
 

@@ -18,28 +18,28 @@ export const ReportTable = (props) => {
       key: "index",
     },
     {
-      title: "Name Reported",
-      dataIndex: "name_reporter",
+      title: "Full Name",
+      dataIndex: "full_name",
       align: "center",
-      key: "name_reporter",
-    },
-    {
-      title: "Reported",
-      dataIndex: "reported_name",
-      align: "center",
-      key: "reported_name",
+      key: "full_name",
     },
     {
       title: "Phone Reporter",
-      dataIndex: "phone_reporter",
+      dataIndex: "phone",
       align: "center",
-      key: "phone_reporter",
+      key: "phone",
     },
     {
-      title: "Reported Phone",
-      dataIndex: "phone_reported",
+      title: "Total Report",
+      dataIndex: "total_reported",
       align: "center",
-      key: "phone_reported",
+      key: "total_reported",
+    },
+    {
+      title: "Time Report",
+      dataIndex: "created_at",
+      align: "center", 
+      key: "created_at",
     },
     {
       title: "Action",
@@ -47,22 +47,12 @@ export const ReportTable = (props) => {
       dataIndex: "action",
       key: "action",
       render: (_, record, index) => {
-        return <Row key={index}><Col span={5} offset={7}><EyeOutlined onClick={() => {
+        return <Row key={index}><Col span={5} offset={9}><EyeOutlined onClick={() => {
 
           props.getDetail({ id: record.id })
           setOpen(true)
-        }} style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }} /></Col><Col span={5}> <Popconfirm
-          title="Delete the report"
-          description="Are you sure to delete this report?"
-          onConfirm={() => {
-            props.deleteReport({ id: record.id })
-          }}
-          okText="Yes"
-          cancelText="No"
-        >
-          <DeleteOutlined style={{ color: "#ff7043", cursor: "pointer" ,fontSize:20}} />
-        </Popconfirm>
-          </Col></Row>
+        }} style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }} /></Col>
+        </Row>
 
 
       },
@@ -84,7 +74,9 @@ export const ReportTable = (props) => {
     return props.store.data.map((item, index) => {
       return {
         ...item,
-        index: (props.store.page - 1) * props.store.limit + index + 1
+        index: (props.store.page - 1) * props.store.limit + index + 1,
+        full_name: `${item.firstName} ${item.last_name}`,
+        phone: item.phone ? item.phone: `_`
       }
     })
   }, [props.store.data, props.store.limit, props.store.page])

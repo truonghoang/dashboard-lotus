@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   detail: {},
+  detailLink: [],
+  detailAccount:[],
   error: false,
   errMess: null,
   page: 1,
@@ -50,12 +52,31 @@ const reportSlice = createSlice({
     reportRequest: (state) =>{
       state.isLoading =true
     },
+    detailLinkReportedRequest:(state)=>{
+      state.isLoading =true
+    },
+    detailLinkReportedSuccess: (state,action)=>{
+      state.isLoading =false,
+      state.detailLink=action.payload
+    },
+    detailAccountReportedRequest:(state)=>{
+      state.isLoading =true
+    },
+    closeDetailLinkAndLink:(state)=>{
+      state.detailLink =[],
+      state.detailAccount=[]
+    },
+ 
+    detailAccountReportedSuccess: (state,action)=>{
+      state.isLoading =false,
+      state.detailAccount=action.payload
+    },
     reportSuccess: (state)=>{
       state.isLoading = false
     }
   },
 });
 
-export const {closeDetail,reportRequest,reportSuccess, requestFailure, listReportRequest, listReportSuccess, detailReportRequest, detailReportSuccess, deleteReportRequest, deleteReportSucess } =
+export const {closeDetailLinkAndLink,detailAccountReportedRequest,detailAccountReportedSuccess,detailLinkReportedRequest,detailLinkReportedSuccess,closeDetail,reportRequest,reportSuccess, requestFailure, listReportRequest, listReportSuccess, detailReportRequest, detailReportSuccess, deleteReportRequest, deleteReportSucess } =
   reportSlice.actions;
 export default reportSlice.reducer;

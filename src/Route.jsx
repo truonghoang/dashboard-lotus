@@ -29,7 +29,7 @@ function AppRoute() {
           </ProtectedRoute>
         }
       />
-       <Route
+       {/* <Route
         path="/user/collection"
         element={
           <ProtectedRoute
@@ -37,13 +37,13 @@ function AppRoute() {
             <User />
           </ProtectedRoute>
         }
-      />
+      /> */}
        <Route
-        path="/report/form"
+        path="/report/user/:id"
         element={
           <ProtectedRoute
           >
-            <Report />
+            <User />
           </ProtectedRoute>
         }
       />

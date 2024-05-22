@@ -1,5 +1,65 @@
 .copy-icon {
+    cursor: pointer;
     &:hover{
         color: #42a5f5;
+    }
+}
+
+.detail {
+    color: #42a5f5;
+    cursor: pointer;
+    &:hover{
+        color: #ff9800;
+    }
+}
+.drawer1{
+   .title{
+    margin: 20px 0px;
+   }
+   .row{
+    margin: 20px 0px;
+   } 
+   .note{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0px;
+    width: 90%;
+    height: 70px;
+    border-radius: 5px;
+    border:1px dashed#ffab91 ;
+    padding: 20px;
+    color:#ff5722;
+    text-align: center;
+    &:hover{
+        color:#2196f3;
+        border: 1px dashed #bbdefb;
+    }
+   }
+}
+.drawer2{
+    .title{
+        font-size: 20px;
+        margin: 20px 0px;
+    }
+    .row{
+        margin: 10px 0px;
+    }
+    .link{
+        width: 90%;
+        height: 40px;
+        background-color: #eeeeee;
+        border-radius: 5px;
+        padding: 10px;
+    }
+    .account {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 90%;
+        height: 100px;
+        background-color: #eeeeee;
+        border-radius: 5px;
+        padding: 10px;
     }
 }

@@ -5,14 +5,13 @@ import {
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined
-  
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Button, Menu } from "antd";
-import {useNavigate,useLocation} from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
 import "@/styles/SideBar.scss";
-import linkimg from "@/assets/lotus.png"
+import linkimg from "@/assets/lotus.png";
 const items = [
   {
     key: "/",
@@ -20,54 +19,75 @@ const items = [
     label: "Dashboard Report",
   },
   {
-    key: "/report/form",
-    icon: <MailOutlined />,
-    label: "Report Form",
-  },
-  {
-    key: "sub1",
-    label: "User",
+    key: "/report/user/:id",
     icon: <UserOutlined />,
-    children: [
-      {
-        key: "/user/collection",
-        label: "Collection",
-      },
-      {
-        key: "/user/search",
-        label: "Search",
-      }
-    
-    ],
+    label: "User",
   },
-  
+  // {
+  //   key: "sub1",
+  //   label: "User",
+  //   icon: <UserOutlined />,
+  //   children: [
+  //     {
+  //       key: "/user/collection",
+  //       label: "Collection",
+  //     },
+  //     {
+  //       key: "/user/search",
+  //       label: "Search",
+  //     }
+
+  //   ],
+  // },
 ];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  const [current,setCurrent] = React.useState("/")
- React.useEffect(()=>{
-  if(location.pathname){
-   setCurrent(location.pathname)
-  }
- },[location.pathname])
+  const items = [
+    {
+      key: "/",
+      icon: <DesktopOutlined />,
+      label: "Dashboard Report",
+    },
+    {
+      key: `${location.pathname.includes("/report/user")? location.pathname :"/report/user"}`,
+      icon: <UserOutlined />,
+      label: "User",
+      disabled:location.pathname.includes("/report/user")? location.pathname :"/report/user"
+    },
+    // {
+    //   key: "sub1",
+    //   label: "User",
+    //   icon: <UserOutlined />,
+    //   children: [
+    //     {
+    //       key: "/user/collection",
+    //       label: "Collection",
+    //     },
+    //     {
+    //       key: "/user/search",
+    //       label: "Search",
+    //     }
+
+    //   ],
+    // },
+  ];
+  const [current, setCurrent] = React.useState("/");
+  React.useEffect(() => {
+    if (location.pathname) {
+      setCurrent(location.pathname);
+    }
+  }, [location.pathname]);
   return (
-    <div
-     className="wrap-sidebar"
-     
-    >
-    <div className="top-sidebar">
-        <img src={linkimg} alt="img" style={{width:100}}/>
-    </div>
-      <Button
-      className="btn-menu"
-        type="primary"
-        onClick={toggleCollapsed}
-      >
+    <div className="wrap-sidebar">
+      <div className="top-sidebar">
+        <img src={linkimg} alt="img" style={{ width: 100 }} />
+      </div>
+      <Button className="btn-menu" type="primary" onClick={toggleCollapsed}>
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
       <Menu
@@ -78,8 +98,8 @@ const SideBar = () => {
         theme="dark"
         inlineCollapsed={collapsed}
         items={items}
-        onClick={(item)=>{
-          navigate(item.key)
+        onClick={(item) => {
+          navigate(item.key);
         }}
       />
     </div>

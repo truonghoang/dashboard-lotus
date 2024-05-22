@@ -33,36 +33,17 @@ const userSlice = createSlice({
       state.email = action.payload.email;
     },
 
-    listUserRequest: (state)=>{
+    listReportUserRequest: (state)=>{
       state.isLoading= true
       },
-    listUserSuccess: (state,action) =>{
+    listReportUserSuccess: (state,action) =>{
       state.isLoading = false,
       state.data =action.payload.data,
       state.page =action.payload.page,
       state.limit =action.payload.limit,
       state.totalPage = action.payload.totalPage
     },
-    detailUserRequest: (state)=>{
-      state.isLoading =true
-    },
-    detailUserSuccess : (state,action)=>{
-      state.detail =action.payload
-    },
-    selectUserRequest:(state)=>{
- state.isLoading= true
-    },
-    searchUserRequest:(state)=>{
-      state.isLoading = true
-    },
-    searchUserSuccess: (state,action)=>{
-      state.isLoading =false,
-      state.data = action.payload
-    },
-    selectUserSuccess: (state,action)=>{
-      state.select =action.payload
-      state.isLoading =false
-    },
+    
     closeDetailUser :(state)=>{
       state.detail ={}
     },
@@ -81,9 +62,9 @@ export const {closeDetailUser,
   loginRequest,
   loginSuccess,
   requestFailure,
-  listUserRequest,
-  listUserSuccess,
-  detailUserRequest,detailUserSuccess,selectUserRequest,selectUserSuccess,searchUserRequest,searchUserSuccess
+  listReportUserRequest,
+  listReportUserSuccess,
+  
  
 } = userSlice.actions;
 export default userSlice.reducer;

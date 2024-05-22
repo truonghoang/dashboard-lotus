@@ -2,54 +2,38 @@ import React from "react";
 import { connect } from "react-redux";
 import {useLocation} from "react-router-dom"
 import TableCommon from "../common/Table";
-import { Col, Row,Switch } from "antd";
+import { Col, Row } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import DetailForm from "../common/DetailForm";
 import * as actions from "../../redux/reducers/User";
 export const UserTable = (props) => {
   const columns = [
     {
-      title: "Index",
+      title: "Thứ Tự",
       width: 100,
       dataIndex: "index",
       align: "center",
       key: "index",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      align: "center",
-      key: "name_reporter",
-      render: (_, record, index) => {
-        return (
-          <Row key={index}>
-            <Col span={5} offset={9}>
-            <Switch checkedChildren="Active" unCheckedChildren="Ban" defaultChecked onChange={(checked)=>{console.log(checked)}} />
-            </Col>
-          </Row>
-        );
-      },
-    },
-    {
-      title: "Full Name",
+      title: "Tên Người Báo Cáo",
       dataIndex: "fullName",
       align: "center",
       key: "name_reporter",
     },
     {
-      title: "Phone",
+      title: "Số Điện Thoại",
       dataIndex: "phone",
       align: "center",
       key: "phone",
     },
     {
-      title: "Reason",
+      title: "Lí Do Báo Cáo",
       dataIndex: "reason_label",
       align: "center",
       key: "reason",
     },
     {
-      title: "Action",
+      title: "Chức Năng",
       align: "center",
       dataIndex: "action",
       key: "action",
@@ -71,9 +55,7 @@ export const UserTable = (props) => {
     },
   ];
   const [open, setOpen] = React.useState(false)
-  const reasons = [{
-    
-  }]
+  
   const location = useLocation()
  
  
@@ -102,7 +84,7 @@ export const UserTable = (props) => {
   }, [props.store.data, props.store.limit, props.store.page]);
   return (
     <div>
-    
+
       <TableCommon
         columns={columns}
         pageSize={props.store.limit}

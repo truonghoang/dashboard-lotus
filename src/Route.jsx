@@ -3,8 +3,8 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import * as pages from "@/pages";
 import jsCookie from "js-cookie"
 const ProtectedRoute = ({ children }) => {
-   const user = jsCookie.get("user")
-  // let user = "token"
+  //  const user = jsCookie.get("user")
+  let user = "token"
   if (!user) {
     return <Navigate to={"/login"}  />;
   }

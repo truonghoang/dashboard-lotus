@@ -1,48 +1,50 @@
 import React from "react";
 import { connect } from "react-redux";
 import TableCommon from "../common/Table";
-import { Row, Col, Popconfirm } from "antd";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons"
+import { Row, Col } from "antd";
+import { EyeOutlined } from "@ant-design/icons"
 import DetailForm from "../common/DetailForm";
 import * as actions from "../../redux/reducers/Report"
+import Filter from "../module/Filter";
+
 export const ReportTable = (props) => {
   const [open, setOpen] = React.useState(false)
  
   
   const columns = [
     {
-      title: "Index",
+      title: "Thứ Tự",
       width: 100,
       dataIndex: "index",
       align: "center",
       key: "index",
     },
     {
-      title: "Full Name",
+      title: "Tên Người Bị Báo Cáo",
       dataIndex: "full_name",
       align: "center",
       key: "full_name",
     },
     {
-      title: "Phone Reporter",
+      title: "Số Điện Thoại",
       dataIndex: "phone",
       align: "center",
       key: "phone",
     },
     {
-      title: "Total Report",
+      title: "Số Lượt Bị Báo Cáo",
       dataIndex: "total_reported",
       align: "center",
       key: "total_reported",
     },
     {
-      title: "Time Report",
+      title: "Thời Gian Báo Cáo",
       dataIndex: "created_at",
       align: "center", 
       key: "created_at",
     },
     {
-      title: "Action",
+      title: "Chức Năng",
       align: "center",
       dataIndex: "action",
       key: "action",
@@ -82,6 +84,7 @@ export const ReportTable = (props) => {
   }, [props.store.data, props.store.limit, props.store.page])
   return (
     <div>
+    <Filter/>
       <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={props.store.detail} title="DETAIL REPORT INFORMATION" />
       <TableCommon columns={columns} pageSize={props.store.limit} totalPage={props.store.totalPage} data={dataResource} />
     </div>

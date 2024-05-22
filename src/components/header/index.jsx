@@ -11,7 +11,7 @@ import {useNavigate} from "react-router-dom"
   return (
     <div className='wrap-header'>
       <Button className='btn-logout' onClick={()=>{ jsCookie.remove("user");
-      navigate("/login")}} >Logout <LogoutOutlined /></Button>
+      navigate("/login")}} >Đăng xuất <LogoutOutlined /></Button>
     </div>
   )
 }

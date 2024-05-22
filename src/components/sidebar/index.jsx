@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import {
   DesktopOutlined,
-  MailOutlined,
+  ContainerOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
@@ -12,34 +12,7 @@ import { Button, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import "@/styles/SideBar.scss";
 import linkimg from "@/assets/lotus.png";
-const items = [
-  {
-    key: "/",
-    icon: <DesktopOutlined />,
-    label: "Dashboard Report",
-  },
-  {
-    key: "/report/user/:id",
-    icon: <UserOutlined />,
-    label: "User",
-  },
-  // {
-  //   key: "sub1",
-  //   label: "User",
-  //   icon: <UserOutlined />,
-  //   children: [
-  //     {
-  //       key: "/user/collection",
-  //       label: "Collection",
-  //     },
-  //     {
-  //       key: "/user/search",
-  //       label: "Search",
-  //     }
 
-  //   ],
-  // },
-];
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
@@ -51,30 +24,26 @@ const SideBar = () => {
     {
       key: "/",
       icon: <DesktopOutlined />,
-      label: "Dashboard Report",
+      label: "Dashboard ",
     },
     {
       key: `${location.pathname.includes("/report/user")? location.pathname :"/report/user"}`,
-      icon: <UserOutlined />,
-      label: "User",
+      icon: <ContainerOutlined />,
+      label: "Báo Cáo",
       disabled:location.pathname.includes("/report/user")? location.pathname :"/report/user"
     },
-    // {
-    //   key: "sub1",
-    //   label: "User",
-    //   icon: <UserOutlined />,
-    //   children: [
-    //     {
-    //       key: "/user/collection",
-    //       label: "Collection",
-    //     },
-    //     {
-    //       key: "/user/search",
-    //       label: "Search",
-    //     }
+    {
+      key: "sub1",
+      label: "Người Dùng",
+      icon: <UserOutlined />,
+      children: [
+        {
+          key: "/user/collection",
+          label: "Danh Sách",
+        },
 
-    //   ],
-    // },
+      ],
+    },
   ];
   const [current, setCurrent] = React.useState("/");
   React.useEffect(() => {

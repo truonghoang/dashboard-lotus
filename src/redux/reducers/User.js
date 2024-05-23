@@ -43,6 +43,16 @@ const userSlice = createSlice({
       state.limit =action.payload.limit,
       state.totalPage = action.payload.totalPage
     },
+    listUserBanRequest: (state)=>{
+      state.isLoading= true
+      },
+    listUserBanSuccess: (state,action)=>{
+      state.isLoading=false
+      state.data =action.payload.data,
+      state.page=action.payload.page,
+      state.limit=action.payload.limit,
+      state.totalPage=action.payload.totalpage
+    },
     
     closeDetailUser :(state)=>{
       state.detail ={}
@@ -56,7 +66,9 @@ const userSlice = createSlice({
   },
 });
 
-export const {closeDetailUser,
+export const {
+  listUserBanRequest,listUserBanSuccess,
+  closeDetailUser,
   logoutRequest,
   registerRequest,
   loginRequest,

@@ -84,7 +84,7 @@ export const ReportTable = (props) => {
   }, [props.store.data, props.store.limit, props.store.page])
   return (
     <div>
-    <Filter/>
+    <Filter isSearch={true} isNew={true} isReason={true}/>
       <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={props.store.detail} title="DETAIL REPORT INFORMATION" />
       <TableCommon columns={columns} pageSize={props.store.limit} totalPage={props.store.totalPage} data={dataResource} />
     </div>

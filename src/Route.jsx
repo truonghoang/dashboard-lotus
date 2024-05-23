@@ -3,8 +3,8 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import * as pages from "@/pages";
 import jsCookie from "js-cookie"
 const ProtectedRoute = ({ children }) => {
-  //  const user = jsCookie.get("user")
-  let user = "token"
+    const user = jsCookie.get("user")
+//  let user = "token"
   if (!user) {
     return <Navigate to={"/login"}  />;
   }
@@ -15,7 +15,7 @@ const ProtectedRoute = ({ children }) => {
 const Home = pages.HomePage;
 const Login = pages.LoginPage;
 const User = pages.UserPage
-const Report = pages.ReportFormPage
+const UserBanned = pages.UserBanPage
 function AppRoute() {
   return (
     <Routes>
@@ -29,15 +29,15 @@ function AppRoute() {
           </ProtectedRoute>
         }
       />
-       {/* <Route
-        path="/user/collection"
+       <Route
+        path="/user/banned"
         element={
           <ProtectedRoute
           >
-            <User />
+            <UserBanned />
           </ProtectedRoute>
         }
-      /> */}
+      />
        <Route
         path="/report/user/:id"
         element={

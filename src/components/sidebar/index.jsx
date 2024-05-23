@@ -38,8 +38,8 @@ const SideBar = () => {
       icon: <UserOutlined />,
       children: [
         {
-          key: "/user/collection",
-          label: "Danh Sách",
+          key: "/user/banned",
+          label: "Danh Sách Ban",
         },
 
       ],

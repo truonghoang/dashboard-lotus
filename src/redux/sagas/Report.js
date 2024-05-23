@@ -75,7 +75,7 @@ function* detailLinkReportedSaga({payload} ) {
     }
   }
 const reportSaga = [
-  takeEvery(actions.listReportRequest.type, listReportSaga),
+  takeLatest(actions.listReportRequest.type, listReportSaga),
   takeEvery(actions.detailReportRequest.type, detailReportSaga),
   takeEvery(actions.detailAccountReportedRequest.type,detailAccountReportedSaga),
   takeEvery(actions.detailLinkReportedRequest.type,detailLinkReportedSaga)

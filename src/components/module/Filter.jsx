@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { FilterOutlined } from "@ant-design/icons";
-import { Select, Input, Row, Col, Radio } from "antd";
+import { Select, Input, Button, Radio } from "antd";
 import "@/styles/Filter.scss";
 export const Filter = (props) => {
-  const { isSearch, isReason, isNew } = props;
+  const { isSearch, isReason, isNew,onSelect,onFilterTime,reloadData, onSearch } = props;
   const options = [
     {
       label: "Spam",
@@ -17,9 +17,9 @@ export const Filter = (props) => {
   ];
   const [orderBy, setOrderBy] = React.useState("ASC");
   const handleSelect = (value) => {
-    console.log(value);
+    onSelect({page:1,limit:10,reason:value})
   };
-  const onSearch = (value) => console.log(value);
+  const handleSearch = (value) => onSearch(value);
   return (
     <div className="wrap-filter">
       <div className="filter-reason">
@@ -42,6 +42,9 @@ export const Filter = (props) => {
             name="filterDate"
             buttonStyle="solid"
             defaultValue={orderBy}
+            onChange={(e)=>{
+              onFilterTime({orderBy:e.target.value})
+            }}
           >
             <Radio.Button value={"ASC"}>Mới nhất</Radio.Button>
             <Radio.Button value={"DESC"}>Cũ nhất</Radio.Button>
@@ -53,13 +56,14 @@ export const Filter = (props) => {
       {isSearch ? (
         <Input.Search
           className="search"
-          placeholder="tìm kiếm theo số điện thoại"
-          onSearch={onSearch}
+          placeholder="tìm số điện thoại hoặc name"
+          onSearch={handleSearch}
           enterButton
         />
       ) : (
         ""
       )}
+      <Button type="dashed" className="btn-reload" onClick={()=>{reloadData()}}>Reload</Button>
     </div>
   );
 };

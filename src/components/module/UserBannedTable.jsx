@@ -37,7 +37,7 @@ export const UserTable = (props) => {
       }
     },
     {
-      title: "Chức Năng",
+      title: "Lịch Sử Ban/UnBan",
       align: "center",
       dataIndex: "action",
       key: "action",
@@ -47,8 +47,8 @@ export const UserTable = (props) => {
             <Col span={5} offset={9}>
               <EyeOutlined
                 onClick={() => {
-                  props.getDetail({ id: record.id });
-                  setOpen(true);
+                  
+                  setOpenBan(true);
                 }}
                 style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }}
               />
@@ -57,8 +57,9 @@ export const UserTable = (props) => {
         );
       },
     },
+   
   ];
-  const [open, setOpen] = React.useState(false)
+  const [openBan, setOpenBan] = React.useState(false)
   
 
  

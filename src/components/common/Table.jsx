@@ -13,13 +13,13 @@ import "@/styles/Table.scss";
   const location = useLocation();
 
   const handleChangePage = React.useCallback(
-    (page, limit) => {
+    (page, limit,sort) => {
       navigate({
         pathname: location.pathname,
-        search: `page=${page}&&limit=${limit}`,
+        search: `page=${page}&&limit=${limit}&&sort=asc`,
       });
 
-      onChangePage && onChangePage(page, limit);
+      onChangePage && onChangePage(page, limit,sort);
     },
     [history, location.pathname]
   );

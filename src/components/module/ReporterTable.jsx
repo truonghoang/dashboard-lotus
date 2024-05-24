@@ -105,9 +105,13 @@ export const UserTable = (props) => {
   }, [props.store.data, props.store.limit, props.store.page]);
 
 
-  console.log("detail",detail)
+  const onSearch =(value) =>{ props.searchReport({page:1,limit:20,keySearch:value})}
+  const reloadData = ()=>{ props.getReport({page:1,limit:10,orderBy:"ASC"})}
+  const onSelect =(value)=>{ props.filterByReason(value)}
+ const onFilter = (value)=>{props.getReport({...value,page:1,limit:10})}
   return (
     <div>
+     <Filter onSearch ={onSearch} reloadData={reloadData} isSearch={true} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>
     <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={detail} title="DETAIL REPORT INFORMATION" />
       <TableCommon
         columns={columns}

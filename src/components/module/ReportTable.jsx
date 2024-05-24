@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import TableCommon from "../common/Table";
 import { Row, Col } from "antd";
 import { EyeOutlined } from "@ant-design/icons"
+import {useLocation,useSearchParams} from "react-router-dom"
 import DetailForm from "../common/DetailForm";
 import * as actions from "../../redux/reducers/Report"
 import Filter from "../module/Filter";
 
 export const ReportTable = (props) => {
   const [open, setOpen] = React.useState(false)
- 
-  
+  const location = useLocation()
   const columns = [
     {
       title: "Thứ Tự",
@@ -69,9 +69,18 @@ export const ReportTable = (props) => {
   }
   React.useEffect(() => {
     // eslint-disable-next-line react/prop-types
-    props.getReport({ page: 1, limit: 20 })
-  }, [])
-  
+    if(location.search){
+      const queryParams = new URLSearchParams(location.search);
+      const page =queryParams.get("page")
+      const limit =queryParams.get("limit")
+      const orderBy = queryParams.get("sort")
+      props.getReport({page,limit,orderBy})
+    }else{
+      props.getReport({ page: 1, limit: 10,orderBy:"ASC" })
+    }
+   
+  }, [location.search])
+ 
   const dataResource = React.useMemo(() => {
     return props.store.data.map((item, index) => {
       return {
@@ -82,11 +91,15 @@ export const ReportTable = (props) => {
       }
     })
   }, [props.store.data, props.store.limit, props.store.page])
+  const onSearch =(value) =>{ props.searchReport({page:1,limit:20,keySearch:value})}
+  const reloadData = ()=>{ props.getReport({page:1,limit:10,orderBy:"ASC"})}
+  const onSelect =(value)=>{ props.filterByReason(value)}
+ const onFilter = (value)=>{props.getReport({...value,page:1,limit:10})}
   return (
     <div>
-    <Filter isSearch={true} isNew={true} isReason={true}/>
+    <Filter onSearch ={onSearch} reloadData={reloadData} isSearch={true} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>
       <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={props.store.detail} title="DETAIL REPORT INFORMATION" />
-      <TableCommon columns={columns} pageSize={props.store.limit} totalPage={props.store.totalPage} data={dataResource} />
+      <TableCommon columns={columns} pageSize={props.store.limit} totalPage={props.store.totalPage} data={dataResource}   />
     </div>
   );
 };
@@ -101,6 +114,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getReport: (data) => {
       dispatch(actions.listReportRequest(data))
+    },
+    filterByReason : (data)=>{
+      dispatch(actions.filterByReasonRequest(data))
+    },
+    searchReport: (data)=>{
+      dispatch(actions.searchReportRequest(data))
     },
     getDetail: (data) => {
       dispatch(actions.detailReportRequest(data))

@@ -1,6 +1,6 @@
 import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import Swal from "sweetalert2";
-import { listReport, detailReport,getListReportByPeerId,getListLinkOfAccount,getListAccountPhoneOfAccount } from "@/apis/report";
+import { listReport,filterByReason,searchReport, detailReport,getListReportByPeerId,getListLinkOfAccount,getListAccountPhoneOfAccount } from "@/apis/report";
 import * as actions from "../reducers/Report";
 
 function* listReportSaga({ payload }) {
@@ -74,10 +74,32 @@ function* detailLinkReportedSaga({payload} ) {
       yield put(actions.requestFailure(error));
     }
   }
+
+
+  function* filterByReasonSaga({payload}){
+    try {
+      const res = yield filterByReason(payload);
+      if (res.status == 0) {
+        yield put(actions.requestFailure(res.message));
+      } else {
+        yield put(
+          actions.filterByReasonSuccess({
+            data: res.response.data,
+            limit: res.response.limit,
+            page: res.response.page,
+            totalPage: res.response.totalPage,
+          })
+        );
+      }
+    } catch (error) {
+      yield put(actions.requestFailure(error));
+    }
+  }
 const reportSaga = [
   takeLatest(actions.listReportRequest.type, listReportSaga),
   takeEvery(actions.detailReportRequest.type, detailReportSaga),
   takeEvery(actions.detailAccountReportedRequest.type,detailAccountReportedSaga),
-  takeEvery(actions.detailLinkReportedRequest.type,detailLinkReportedSaga)
+  takeEvery(actions.detailLinkReportedRequest.type,detailLinkReportedSaga),
+  takeLatest(actions.filterByReasonRequest.type,filterByReasonSaga)
 ];
 export default reportSaga;

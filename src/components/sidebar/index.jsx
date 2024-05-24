@@ -27,12 +27,6 @@ const SideBar = () => {
       label: "Dashboard ",
     },
     {
-      key: `${location.pathname.includes("/report/user")? location.pathname :"/report/user"}`,
-      icon: <ContainerOutlined />,
-      label: "Báo Cáo",
-      disabled:location.pathname.includes("/report/user")? location.pathname :"/report/user"
-    },
-    {
       key: "sub1",
       label: "Người Dùng",
       icon: <UserOutlined />,

@@ -4,7 +4,7 @@ const initialState = {
   isLoading: false,
   detail: {},
   detailLink: [],
-  detailAccount:[],
+  detailAccount: [],
   error: false,
   errMess: null,
   page: 1,
@@ -26,57 +26,91 @@ const reportSlice = createSlice({
       state.isLoading = true;
     },
     detailReportRequest: (state) => {
-      state.isLoading = true
+      state.isLoading = true;
     },
     detailReportSuccess: (state, action) => {
-      state.isLoading = false,
-        state.detail = action.payload
+      (state.isLoading = false), (state.detail = action.payload);
     },
     listReportSuccess: (state, action) => {
+         (state.isLoading = false),
+        (state.data = action.payload.data),
+        (state.page = action.payload.page),
+        (state.limit = action.payload.limit);
+        state.totalPage = action.payload.totalPage;
+    },
+    deleteReportRequest: (state) => {
+      state.isLoading = true;
+    },
+    closeDetail: (state) => {
+      state.detail = {};
+    },
+    deleteReportSucess: (state) => {
+      state.isLoading = false;
+    },
+    reportRequest: (state) => {
+      state.isLoading = true;
+    },
+    detailLinkReportedRequest: (state) => {
+      state.isLoading = true;
+    },
+    detailLinkReportedSuccess: (state, action) => {
+      (state.isLoading = false), (state.detailLink = action.payload);
+    },
+    filterByReasonRequest: (state) => {
+      state.isLoading = true;
+    },
+    filterByReasonSuccess: (state, action) => {
       (state.isLoading = false),
         (state.data = action.payload.data),
         (state.page = action.payload.page),
         (state.limit = action.payload.limit);
-      (state.limit) = action.payload.totalPage
+      state.totalPage = action.payload.totalPage;
     },
-    deleteReportRequest: (state) => {
-      state.isLoading = true
+    searchReportRequest: (state) => {
+      state.isLoading = true;
+    },
+    searchReportSuccess: (state, action) => {
+      (state.isLoading = false),
+        (state.data = action.payload.data),
+        (state.page = action.payload.page),
+        (state.limit = action.payload.limit);
+      state.totalPage = action.payload.totalPage;
+    },
+    detailAccountReportedRequest: (state) => {
+      state.isLoading = true;
+    },
+    closeDetailLinkAndLink: (state) => {
+      (state.detailLink = []), (state.detailAccount = []);
+    },
 
+    detailAccountReportedSuccess: (state, action) => {
+      (state.isLoading = false), (state.detailAccount = action.payload);
     },
-    closeDetail:(state)=>{
-      state.detail ={}
+    reportSuccess: (state) => {
+      state.isLoading = false;
     },
-    deleteReportSucess: (state) => {
-      state.isLoading = false
-    },
-    reportRequest: (state) =>{
-      state.isLoading =true
-    },
-    detailLinkReportedRequest:(state)=>{
-      state.isLoading =true
-    },
-    detailLinkReportedSuccess: (state,action)=>{
-      state.isLoading =false,
-      state.detailLink=action.payload
-    },
-    detailAccountReportedRequest:(state)=>{
-      state.isLoading =true
-    },
-    closeDetailLinkAndLink:(state)=>{
-      state.detailLink =[],
-      state.detailAccount=[]
-    },
- 
-    detailAccountReportedSuccess: (state,action)=>{
-      state.isLoading =false,
-      state.detailAccount=action.payload
-    },
-    reportSuccess: (state)=>{
-      state.isLoading = false
-    }
   },
 });
 
-export const {closeDetailLinkAndLink,detailAccountReportedRequest,detailAccountReportedSuccess,detailLinkReportedRequest,detailLinkReportedSuccess,closeDetail,reportRequest,reportSuccess, requestFailure, listReportRequest, listReportSuccess, detailReportRequest, detailReportSuccess, deleteReportRequest, deleteReportSucess } =
-  reportSlice.actions;
+export const {
+  filterByReasonRequest,
+  filterByReasonSuccess,
+  searchReportRequest,
+  searchReportSuccess,
+  closeDetailLinkAndLink,
+  detailAccountReportedRequest,
+  detailAccountReportedSuccess,
+  detailLinkReportedRequest,
+  detailLinkReportedSuccess,
+  closeDetail,
+  reportRequest,
+  reportSuccess,
+  requestFailure,
+  listReportRequest,
+  listReportSuccess,
+  detailReportRequest,
+  detailReportSuccess,
+  deleteReportRequest,
+  deleteReportSucess,
+} = reportSlice.actions;
 export default reportSlice.reducer;

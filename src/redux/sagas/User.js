@@ -18,7 +18,9 @@ function* loginSaga({ payload }) {
     })
     yield put(actions.requestFailure(res.message))
   } else {
-    yield Cookies.set("account",res.response.email)
+    const expirationDate = new Date();
+    expirationDate.setMinutes(expirationDate.getMinutes() + 15);
+    yield Cookies.set("account",res.response.email,{expires:expirationDate})
     yield put(actions.loginSuccess({
       token: res.response.token,
       email: res.response.email

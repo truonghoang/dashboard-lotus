@@ -1,39 +1,40 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { Input, Button } from "antd";
 import { useFormik } from "formik";
-import {loginRequest} from "../../redux/reducers/User"
+import { loginRequest } from "../../redux/reducers/User";
 import * as yup from "yup";
-import cookie from "js-cookie"
+import cookie from "js-cookie";
 import "@/styles/Login.scss";
 
 function Login(props) {
- 
   const validateSchema = yup.object({
     email: yup.string().required("email is required"),
     password: yup.string().required("password is required"),
   });
- const navigate = useNavigate()
+  const navigate = useNavigate();
   const initialValues = { email: "", password: "" };
-  
+
   const handleSubmit = (values) => {
-    props.loginAction(values)
+    props.loginAction(values);
     // formik.resetForm()
   };
-  
+
   const formik = useFormik({
     initialValues,
     validationSchema: validateSchema,
     onSubmit: handleSubmit,
   });
- React.useEffect(()=>{
-    if(props.token){
-        cookie.set("user",props.token)
-        navigate("/")
+  React.useEffect(() => {
+    if (props.token) {
+      const expirationDate = new Date();
+      expirationDate.setMinutes(expirationDate.getMinutes() + 15);
+      cookie.set("user", props.token, { expires: expirationDate });
+      navigate("/");
     }
- },[props.token])
+  }, [props.token]);
 
   return (
     <div className="wrap-form-login">
@@ -47,18 +48,27 @@ function Login(props) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.email?<p className="err">{formik.errors.email}</p>:""}
+        {formik.touched.email ? (
+          <p className="err">{formik.errors.email}</p>
+        ) : (
+          ""
+        )}
         <Input.Password
-        value={formik.values.password}
+          value={formik.values.password}
           className="input-common"
           name="password"
           placeholder="Password"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-         
         />
-         {formik.touched.password ?<p className="err">{formik.errors.password}</p>:""}
-        <button className="btn-summit" type="submit">Sign In DashBoard</button>
+        {formik.touched.password ? (
+          <p className="err">{formik.errors.password}</p>
+        ) : (
+          ""
+        )}
+        <button className="btn-summit" type="submit">
+          Sign In DashBoard
+        </button>
       </form>
     </div>
   );
@@ -66,15 +76,15 @@ function Login(props) {
 
 const mapStateToProps = (state) => {
   return {
-    token : state.UserReducer.token
+    token: state.UserReducer.token,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginAction: (data)=>{
-      dispatch(loginRequest(data))
-    }
+    loginAction: (data) => {
+      dispatch(loginRequest(data));
+    },
   };
 };
 

@@ -11,6 +11,7 @@ const initialState = {
   limit: 20,
   totalPage: 1,
   data: [],
+  otherReport: [],
 };
 
 const reporterSlice = createSlice({
@@ -32,13 +33,8 @@ const reporterSlice = createSlice({
       (state.isLoading = false), (state.detail = action.payload);
     },
     listReportOfReporterSuccess: (state, action) => {
-      (state.isLoading = false),
-        (state.data = action.payload.data),
-        (state.page = action.payload.page),
-        (state.limit = action.payload.limit);
-      state.totalPage = action.payload.totalPage;
+      (state.isLoading = false), (state.data = action.payload.data);
     },
-
     closeDetail: (state) => {
       state.detail = {};
     },
@@ -47,11 +43,7 @@ const reporterSlice = createSlice({
       state.isLoading = true;
     },
     filterByReasonSuccess: (state, action) => {
-      (state.isLoading = false),
-        (state.data = action.payload.data),
-        (state.page = action.payload.page),
-        (state.limit = action.payload.limit);
-      state.totalPage = action.payload.totalPage;
+      (state.isLoading = false), (state.data = action.payload.data);
     },
   },
 });

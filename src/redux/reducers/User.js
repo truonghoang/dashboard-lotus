@@ -10,7 +10,8 @@ const initialState = {
   page: 1,
   limit:10,
   select:[],
-  data:[],totalPage:1
+  data:[],totalPage:1,
+  history: []
  
 };
 
@@ -32,16 +33,23 @@ const userSlice = createSlice({
       state.token = action.payload.token;
       state.email = action.payload.email;
     },
-
+    searchUserBannedRequest:(state)=>{
+      state.isLoading=true
+    },
+    searchUserBannedSuccess:(state,action)=>{
+      state.isLoading=false
+      state.data =action.payload.data,
+      state.page=action.payload.page,
+      state.limit=action.payload.limit,
+      state.totalPage=action.payload.totalpage
+    },
     listReportUserRequest: (state)=>{
       state.isLoading= true
       },
     listReportUserSuccess: (state,action) =>{
       state.isLoading = false,
-      state.data =action.payload.data,
-      state.page =action.payload.page,
-      state.limit =action.payload.limit,
-      state.totalPage = action.payload.totalPage
+      state.data =action.payload.data
+      
     },
     listUserBanRequest: (state)=>{
       state.isLoading= true
@@ -51,9 +59,23 @@ const userSlice = createSlice({
       state.data =action.payload.data,
       state.page=action.payload.page,
       state.limit=action.payload.limit,
-      state.totalPage=action.payload.totalpage
+      state.totalPage=action.payload.totalPage
     },
-    
+    historyUserBannedRequest: (state)=>{
+      state.isLoading =true
+    },
+    historyUserBannedSuccess:(state,action)=>{
+      state.isLoading=false,
+      state.history =action.payload
+    },
+    filterReportRequest:(state)=>{
+      state.isLoading =true
+    },
+    filterReportSuccess:(state,action)=>{
+      state.isLoading =false,
+      state.data= action.payload.data
+    },
+
     closeDetailUser :(state)=>{
       state.detail ={}
     },
@@ -66,7 +88,7 @@ const userSlice = createSlice({
   },
 });
 
-export const {
+export const {filterReportRequest,filterReportSuccess,
   listUserBanRequest,listUserBanSuccess,
   closeDetailUser,
   logoutRequest,
@@ -76,7 +98,10 @@ export const {
   requestFailure,
   listReportUserRequest,
   listReportUserSuccess,
-  
+  searchUserBannedRequest,
+  searchUserBannedSuccess,
+  historyUserBannedRequest,
+  historyUserBannedSuccess
  
 } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,7 +1,7 @@
 import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import Swal from 'sweetalert2';
 import { login, listUserBan} from "@/apis/user"
-import {getListReportByPeerId} from "../../apis/report"
+import {getListReportByPeerId,filterByReasonReportedUser} from "../../apis/report"
 import * as actions from '../reducers/User';
 import Cookies from 'js-cookie';
 function* loginSaga({ payload }) {
@@ -75,11 +75,32 @@ function* listUserBanSaga({ payload }) {
 
 }
 
+function* filterReportUserSaga({ payload }) {
+
+  try {
+    const res = yield filterByReasonReportedUser(payload)
+    if (res.status == 0) {
+      yield put(actions.requestFailure(res.message))
+    }
+    else {
+      yield put(actions.filterReportSuccess({
+        data: res.response
+       
+      }))
+    }
+  } catch (error) {
+    yield put(actions.requestFailure(error))
+  }
+
+
+
+}
 
 const userSaga = [
   takeEvery(actions.loginRequest.type, loginSaga),
   takeLatest(actions.logoutRequest.type, logoutSaga),
   takeLatest(actions.listReportUserRequest.type, listUserSaga),
-  takeLatest(actions.listUserBanRequest.type,listUserBanSaga)
+  takeLatest(actions.listUserBanRequest.type,listUserBanSaga),
+  takeLatest(actions.filterReportRequest.type,filterReportUserSaga)
 ];
 export default userSaga;

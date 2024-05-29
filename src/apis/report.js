@@ -18,7 +18,7 @@ const getListLinkOfAccount =(payload) =>ApiClient.get(`/api/report/detail/alias?
 const getListAccountPhoneOfAccount =(payload) =>ApiClient.get(`/api/report/detail/account?phone=${payload.phone}`)
 
 //lấy danh sách các tố cáo user chỉ định
-const getListReportByPeerId =payload =>ApiClient.get(`/api/report/reported-user/list?id=${payload.id}`)
+const getListReportByPeerId =payload =>ApiClient.get(`/api/report/reported-user/list?id=${payload.id}&&sort=${payload.orderBy}`)
 
 // đánh dấu đã đọc báo cáo vi phạm
 const processReadReport = payload=>ApiClient.post(`/api/report/process`,payload)
@@ -30,22 +30,22 @@ const getHistoryByPeerId = payload =>ApiClient.get(`/api/report/history/${payloa
 const getReportByReporter = payload =>ApiClient.get(`/api/report/reporter/${payload.id}?sort=${payload.orderBy}`)
 
 // lọc danh sách theo lí do của người báo cáo
-const filterReportOfReporterByReason = payload =>ApiClient.get(`api/report/reporter/filter?id=${payload.id}&reason=${payload.reason}`)
+const filterReportOfReporterByReason = payload =>ApiClient.get(`/api/report/reporter/filter/${payload.id}?reason=${payload.reason}`)
 
 // lấy danh sách cáo báo cáo về người bị báo cáo
-const getListReportOfReportedUser =payload =>ApiClient.get(`/api/report/reported-user/list?id=${payload.id}`)
+const getListReportOfReportedUser =payload =>ApiClient.get(`/api/report/reported-user/list?id=${payload.id}&sort=${payload.orderBy}`)
 
 // xem chi tiết về báo cáo của người bị báo cáo
 const detailReportedUser = payload =>ApiClient.get(`/api/report/reported-user/${payload.id}`)
 
 // từ chối hoặc chấp thuận user báo cáo
 
-const accountOrDeniedReport =payload=> ApiClient.delete(`/api/report/${payload.id}/${payload.process}`)
+const accessOrDeniedReport =payload=> ApiClient.delete(`/api/report/${payload.id}/${payload.process}`)
 
 // lọc danh sách user ban theo
 
 const filterByReasonReportedUser =payload =>ApiClient.get(`/api/report/reported-user/list/filter?id=${payload.id}&reason=${payload.reason}`)
 
 export { listReport, detailReport,getListReportByPeerId,getListLinkOfAccount,getListAccountPhoneOfAccount,filterByReason,searchReport,
-  processReadReport,getHistoryByPeerId,getReportByReporter,filterReportOfReporterByReason,getListReportOfReportedUser,detailReportedUser,accountOrDeniedReport,filterByReasonReportedUser
+  processReadReport,getHistoryByPeerId,getReportByReporter,filterReportOfReporterByReason,getListReportOfReportedUser,detailReportedUser,accessOrDeniedReport,filterByReasonReportedUser
 };

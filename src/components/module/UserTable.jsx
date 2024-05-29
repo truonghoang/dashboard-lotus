@@ -6,6 +6,7 @@ import { Col, Row } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import * as actions from "../../redux/reducers/User";
 import DetailForm from "../common/DetailReportedUser";
+import Filter from "./Filter";
 export const UserTable = (props) => {
   const [detail,setDetail] =React.useState({})
   const columns = [
@@ -33,6 +34,12 @@ export const UserTable = (props) => {
       dataIndex: "reason_label",
       align: "center",
       key: "reason",
+    },
+    {
+      title: "Thời Gian Báo Cáo",
+      dataIndex: "created_at",
+      align: "center",
+      key: "created_at",
     },
     {
       title: "Chức Năng",
@@ -67,23 +74,11 @@ export const UserTable = (props) => {
     setOpen(false)
     props.closeForm()
   }
-  React.useEffect(() => {
-    // eslint-disable-next-line react/prop-types
-    if(location.search){
-      const queryParams = new URLSearchParams(location.search);
-      const page =queryParams.get("page")
-      const limit =queryParams.get("limit")
-      const orderBy = queryParams.get("sort")
-      props.reportUser({page,limit,orderBy})
-    }else{
-      props.reportUser({ page: 1, limit: 10,orderBy:"ASC" })
-    }
-   
-  }, [location.search])
+ 
   React.useEffect(() => {
     
    const path= location.pathname.split("/")
-    props.reportUser({ page: 1, limit: 10,id:path[3] });
+    props.reportUser({ id:path[3],orderBy:'DESC' });
   }, []);
 
   const dataResource = React.useMemo(() => {
@@ -104,10 +99,23 @@ export const UserTable = (props) => {
     });
   }, [props.store.data, props.store.limit, props.store.page]);
 
-
-  console.log("detail",detail)
+  const reloadData = ()=>{
+    const path= location.pathname.split("/")
+    props.reportUser({id:path[3],orderBy:"DESC"})
+   }
+ const onSelect =(value)=>{ 
+  const path= location.pathname.split("/")
+   props.filterByReason({reason:value.reason,id:path[3]})
+ }
+const onFilter = (value)=>{
+  const path= location.pathname.split("/")
+ props.reportUser({...value,id:path[3]})
+}
+  
+  
   return (
     <div>
+     <Filter  reloadData={reloadData} isSearch={false} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>
     <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={detail} title="DETAIL REPORT INFORMATION" />
       <TableCommon
         columns={columns}
@@ -131,6 +139,9 @@ const mapDispatchToProps = (dispatch) => {
     reportUser: (data) => {
       dispatch(actions.listReportUserRequest(data));
     },
+    filterByReason:(data)=>{
+      dispatch(actions.filterReportRequest(data))
+    }
     
   };
 };

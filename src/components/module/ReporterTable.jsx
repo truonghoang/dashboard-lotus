@@ -6,6 +6,7 @@ import { Col, Row } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import * as actions from "../../redux/reducers/User";
 import DetailForm from "../common/DetailReportedUser";
+import Filter from "../module/Filter"
 export const UserTable = (props) => {
   const [detail,setDetail] =React.useState({})
   const columns = [
@@ -106,9 +107,9 @@ export const UserTable = (props) => {
 
 
   const onSearch =(value) =>{ props.searchReport({page:1,limit:20,keySearch:value})}
-  const reloadData = ()=>{ props.getReport({page:1,limit:10,orderBy:"ASC"})}
+  const reloadData = ()=>{ props.reportUser({page:1,limit:10,orderBy:"ASC"})}
   const onSelect =(value)=>{ props.filterByReason(value)}
- const onFilter = (value)=>{props.getReport({...value,page:1,limit:10})}
+ const onFilter = (value)=>{props.reportUser({...value,page:1,limit:10})}
   return (
     <div>
      <Filter onSearch ={onSearch} reloadData={reloadData} isSearch={true} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>

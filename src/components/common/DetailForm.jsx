@@ -156,7 +156,7 @@ export function DetailForm(props) {
           />
         </Row>
         <div className="note">
-            Lệnh ban được thực thi bởi {Cookies.get("account")|| "admin hệ thống"}, các tài khoản có cùng số điện thoại sẽ bị cấm theo, nếu vi phạm điều lệ tài khoản cấm sẽ chịu hình phạt theo điều lệ
+          Warning:  Lệnh ban được thực thi bởi {Cookies.get("account")|| "admin hệ thống"}, các tài khoản có cùng số điện thoại sẽ bị cấm theo, thông tin sẽ được xác thực bởi hệ thống
         </div>
         <Button  type="primary">Thực hiện Ban</Button>
       </Drawer>

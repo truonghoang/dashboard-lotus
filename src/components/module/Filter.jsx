@@ -15,7 +15,7 @@ export const Filter = (props) => {
       value: 1,
     },
   ];
-  const [orderBy, setOrderBy] = React.useState("ASC");
+  const [orderBy, setOrderBy] = React.useState("DESC");
   const handleSelect = (value) => {
     onSelect({page:1,limit:10,reason:value})
   };
@@ -46,8 +46,8 @@ export const Filter = (props) => {
               onFilterTime({orderBy:e.target.value})
             }}
           >
-            <Radio.Button value={"ASC"}>Mới nhất</Radio.Button>
-            <Radio.Button value={"DESC"}>Cũ nhất</Radio.Button>
+            <Radio.Button value={"ASC"}>Cũ nhất</Radio.Button>
+            <Radio.Button value={"DESC"}>Mới nhất</Radio.Button>
           </Radio.Group>
         </div>
       ) : (
@@ -56,7 +56,7 @@ export const Filter = (props) => {
       {isSearch ? (
         <Input.Search
           className="search"
-          placeholder="tìm số điện thoại hoặc name"
+          placeholder="tìm số điện thoại hoặc tên"
           onSearch={handleSearch}
           enterButton
         />

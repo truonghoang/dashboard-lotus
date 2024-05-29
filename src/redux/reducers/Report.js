@@ -89,10 +89,22 @@ const reportSlice = createSlice({
     reportSuccess: (state) => {
       state.isLoading = false;
     },
+    tickNewsReportRequest: (state)=>{
+      state.isLoading =true
+    },
+    tickNewsReportSuccess:(state)=>{
+      state.isLoading=false
+    },
+    accessReportRequest: (state)=>{
+      state.isLoading =true
+    },
+    accessReportSuccess:(state)=>{
+      state.isLoading=false
+    }
   },
 });
 
-export const {
+export const {tickNewsReportRequest,tickNewsReportSuccess,accessReportRequest,accessReportSuccess,
   filterByReasonRequest,
   filterByReasonSuccess,
   searchReportRequest,
@@ -114,3 +126,4 @@ export const {
   deleteReportSucess,
 } = reportSlice.actions;
 export default reportSlice.reducer;
+ 

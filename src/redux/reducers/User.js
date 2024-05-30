@@ -83,12 +83,19 @@ const userSlice = createSlice({
       state.isLoading = false,
       state.error = true,
       state.errMess = action.payload
+    },
+    unBanUserRequest:(state)=>{
+      state.isLoading =true
+    },
+    unBanUserSuccess: (state)=>{
+      state.isLoading =false
     }
 
   },
 });
 
-export const {filterReportRequest,filterReportSuccess,
+export const {unBanUserRequest,unBanUserSuccess,
+  filterReportRequest,filterReportSuccess,
   listUserBanRequest,listUserBanSuccess,
   closeDetailUser,
   logoutRequest,

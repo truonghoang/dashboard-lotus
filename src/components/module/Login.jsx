@@ -27,14 +27,7 @@ function Login(props) {
     validationSchema: validateSchema,
     onSubmit: handleSubmit,
   });
-  React.useEffect(() => {
-    if (props.token) {
-      const expirationDate = new Date();
-      expirationDate.setMinutes(expirationDate.getMinutes() + 15);
-      cookie.set("user", props.token, { expires: expirationDate });
-      navigate("/");
-    }
-  }, [props.token]);
+
 
   return (
     <div className="wrap-form-login">

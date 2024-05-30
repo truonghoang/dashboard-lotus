@@ -28,7 +28,7 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      background-color: #311b92;
+      background-color: #001529;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       box-shadow: 1px 2px 2px 1px;
@@ -55,6 +55,7 @@
             text-align: left;
             width: 80%;
             padding-left: 10px;
+            margin-top: 15px;
 
         }
         .input-common {
@@ -69,7 +70,7 @@
           color: #516780;
         }
 
-        .btn-summit {margin-top: 5px;
+        .btn-summit {margin-top: 25px;
           width: 80%;
           height: 50px;
           border-radius: 15px;

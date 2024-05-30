@@ -10,10 +10,10 @@ const listUserBan = (payload) => ApiClient.get(`/api/user/banned?page=${payload.
 const banUser = payload=>ApiClient.post(`/api/user/banned`,payload)
 
 
-
+const searchUserBanned =payload =>ApiClient.get(`/api/user/search?page=${payload.page}&limit=${payload.limit}&sort=${payload.orderBy}&ban=1&keySearch=${payload.keySearch}`)
 
 
 
 export  {
-    login,register,listUserBan,banUser
+    login,register,listUserBan,banUser,searchUserBanned
 }

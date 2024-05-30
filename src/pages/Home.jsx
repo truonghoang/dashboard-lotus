@@ -7,7 +7,6 @@ function Home() {
   return (
     <div className='wrap-home'>
     <DetailForm/>
-    
     <Table/>
     </div>
   )

@@ -2,19 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { FilterOutlined } from "@ant-design/icons";
 import { Select, Input, Button, Radio } from "antd";
+import {reason_select} from "../../utilizings/array"
 import "@/styles/Filter.scss";
 export const Filter = (props) => {
   const { isSearch, isReason, isNew,onSelect,onFilterTime,reloadData, onSearch } = props;
-  const options = [
-    {
-      label: "Spam",
-      value: 0,
-    },
-    {
-      label: "Tin rác",
-      value: 1,
-    },
-  ];
+  
   const [orderBy, setOrderBy] = React.useState("DESC");
   const handleSelect = (value) => {
     onSelect({page:1,limit:10,reason:value})
@@ -32,7 +24,7 @@ export const Filter = (props) => {
           className="filter-select"
           placeholder=" lí do"
           onChange={handleSelect}
-          options={options}
+          options={reason_select}
         />:""}
       </div>
       {isNew ? (

@@ -1,14 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import {useLocation} from "react-router-dom"
+import { useLocation } from "react-router-dom";
 import TableCommon from "../common/Table";
 import { Col, Row } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import * as actions from "../../redux/reducers/User";
 import DetailForm from "../common/DetailReportedUser";
+import { label_reason } from "../../utilizings/array";
 import Filter from "./Filter";
 export const UserTable = (props) => {
-  const [detail,setDetail] =React.useState({})
+  const [detail, setDetail] = React.useState({});
   const columns = [
     {
       title: "Thứ Tự",
@@ -52,10 +53,10 @@ export const UserTable = (props) => {
             <Col span={5} offset={9}>
               <EyeOutlined
                 onClick={() => {
-                   setDetail(record)
+                  setDetail(record);
                   setOpen(true);
                 }}
-                style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }}
+                style={{ color: "#2196f3", cursor: "pointer", fontSize: 20 }}
               />
             </Col>
           </Row>
@@ -63,66 +64,72 @@ export const UserTable = (props) => {
       },
     },
   ];
-  const [open, setOpen] = React.useState(false)
-  
-  const location = useLocation()
- 
+  const [open, setOpen] = React.useState(false);
+
+  const location = useLocation();
+
   const onShowDetail = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
   const onClose = () => {
-    setOpen(false)
-    props.closeForm()
-  }
- 
+    setOpen(false);
+    props.closeForm();
+  };
+
   React.useEffect(() => {
-    
-   const path= location.pathname.split("/")
-    props.reportUser({ id:path[3],orderBy:'DESC' });
+    const path = location.pathname.split("/");
+    props.reportUser({ id: path[3], orderBy: "DESC" });
   }, []);
 
   const dataResource = React.useMemo(() => {
     return props.store.data.map((item, index) => {
-        let reason_label
-     
-      if (item.reason==0){
-        reason_label="Spam"
-      }else if(item.reason==1){
-        reason_label="Tin rác"
-      }
       return {
         ...item,
         fullName: `${item.first_name}  ${item.last_name}`,
-        reason_label: reason_label,
-        index:  index + 1,
+        reason_label: label_reason[item.reason],
+        index: index + 1,
       };
     });
   }, [props.store.data, props.store.limit, props.store.page]);
 
-  const reloadData = ()=>{
-    const path= location.pathname.split("/")
-    props.reportUser({id:path[3],orderBy:"DESC"})
-   }
- const onSelect =(value)=>{ 
-  const path= location.pathname.split("/")
-   props.filterByReason({reason:value.reason,id:path[3]})
- }
-const onFilter = (value)=>{
-  const path= location.pathname.split("/")
- props.reportUser({...value,id:path[3]})
-}
-  
-  
+  const reloadData = () => {
+    const path = location.pathname.split("/");
+    props.reportUser({ id: path[3], orderBy: "DESC" });
+  };
+  const onSelect = (value) => {
+    const path = location.pathname.split("/");
+    props.filterByReason({ reason: value.reason, id: path[3] });
+  };
+  const onFilter = (value) => {
+    const path = location.pathname.split("/");
+    props.reportUser({ ...value, id: path[3] });
+  };
+
   return (
     <div>
-     <Filter  reloadData={reloadData} isSearch={false} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>
-    <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={detail} title="DETAIL REPORT INFORMATION" />
+      <Filter
+        reloadData={reloadData}
+        isSearch={false}
+        isNew={true}
+        isReason={true}
+        onSelect={onSelect}
+        onFilterTime={onFilter}
+      />
+      <DetailForm
+        open={open}
+        onOpen={onShowDetail}
+        onClose={onClose}
+        item={detail}
+        title="DETAIL REPORT INFORMATION"
+      />
       <TableCommon
         columns={columns}
         pageSize={props.store.limit}
         totalPage={props.store.totalPage}
         data={dataResource}
-        onChangePage={(page,limit)=>{ props.reportUser({page,limit})}}
+        onChangePage={(page, limit) => {
+          props.reportUser({ page, limit });
+        }}
       />
     </div>
   );
@@ -139,10 +146,9 @@ const mapDispatchToProps = (dispatch) => {
     reportUser: (data) => {
       dispatch(actions.listReportUserRequest(data));
     },
-    filterByReason:(data)=>{
-      dispatch(actions.filterReportRequest(data))
-    }
-    
+    filterByReason: (data) => {
+      dispatch(actions.filterReportRequest(data));
+    },
   };
 };
 

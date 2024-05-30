@@ -11,6 +11,7 @@ const initialState = {
   limit: 20,
   totalPage: 1,
   data: [],
+  keySearch:""
 };
 
 const reportSlice = createSlice({
@@ -75,6 +76,7 @@ const reportSlice = createSlice({
         (state.page = action.payload.page),
         (state.limit = action.payload.limit);
       state.totalPage = action.payload.totalPage;
+      state.keySearch= action.payload.keySearch
     },
     detailAccountReportedRequest: (state) => {
       state.isLoading = true;

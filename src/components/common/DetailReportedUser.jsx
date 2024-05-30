@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as actions from "../../redux/reducers/Report";
 import *as otherActions from "../../redux/reducers/Reporter"
-import Cookies from "js-cookie";
 import Filter from "../module/Filter"
 import "@/styles/Detail.scss";
 // eslint-disable-next-line react/prop-types
@@ -147,7 +146,7 @@ const [otherReport,setOtherReport] =React.useState([])
           </Radio.Group> </Col>
         </Row>
         <Divider />
-        <Row style={{color:"#03a9f4",cursor:"pointer"}} onClick={()=>{props.listOtherReportOfReporter({id:item.user_id,orderBy:"ASC"}),setChildrenDrawer(true)}}><Col span={15}>Xem thêm  báo cáo khác của người báo cáo</Col><Col span={4}><ArrowRightOutlined /></Col></Row>
+        <Row style={{color:"#03a9f4",cursor:"pointer"}} onClick={()=>{props.listOtherReportOfReporter({id:item.user_id,orderBy:"DESC"}),setChildrenDrawer(true)}}><Col span={15}>Xem thêm  báo cáo khác của người báo cáo</Col><Col span={4}><ArrowRightOutlined /></Col></Row>
       {DrawerLevel2()}
       </Drawer>
     </div>

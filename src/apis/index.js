@@ -60,7 +60,7 @@ const fetchRequest = (url, configExtend, method, data) => {
     fetch(url, config)
       .then((response) => response.json())
       .then((data) => {
-        if(data?.status==403){
+        if(data?.status==403 || data?.status ==401){
            window.location.href='/login'
         }else{
 

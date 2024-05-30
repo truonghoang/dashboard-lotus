@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import {
   DesktopOutlined,
-  ContainerOutlined,
+  SolutionOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UserOutlined,
@@ -34,6 +34,7 @@ const SideBar = () => {
         {
           key: "/user/banned",
           label: "Danh Sách Ban",
+          icon: <SolutionOutlined />
         },
 
       ],

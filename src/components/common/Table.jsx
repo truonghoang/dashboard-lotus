@@ -16,7 +16,7 @@ import "@/styles/Table.scss";
     (page, limit,sort) => {
       navigate({
         pathname: location.pathname,
-        search: `page=${page}&&limit=${limit}&&sort=asc`,
+        search: `page=${page}&&limit=${limit}&&sort=desc`,
       });
 
       onChangePage && onChangePage(page, limit,sort);
@@ -37,6 +37,7 @@ import "@/styles/Table.scss";
         size="middle"
         scroll={{
           y: 600,
+          x: 600
         }}
       />
       <Pagination

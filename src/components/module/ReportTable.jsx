@@ -2,15 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import TableCommon from "../common/Table";
 import { Row, Col } from "antd";
-import { EyeOutlined } from "@ant-design/icons"
-import {useLocation,useSearchParams} from "react-router-dom"
+import { EyeOutlined } from "@ant-design/icons";
+import { useLocation, useSearchParams } from "react-router-dom";
 import DetailForm from "../common/DetailForm";
-import * as actions from "../../redux/reducers/Report"
+import * as actions from "../../redux/reducers/Report";
 import Filter from "../module/Filter";
 
 export const ReportTable = (props) => {
-  const [open, setOpen] = React.useState(false)
-  const location = useLocation()
+  const [open, setOpen] = React.useState(false);
+  const location = useLocation();
   const columns = [
     {
       title: "Thứ Tự",
@@ -40,7 +40,7 @@ export const ReportTable = (props) => {
     {
       title: "Thời Gian Báo Cáo",
       dataIndex: "created_at",
-      align: "center", 
+      align: "center",
       key: "created_at",
     },
     {
@@ -49,86 +49,132 @@ export const ReportTable = (props) => {
       dataIndex: "action",
       key: "action",
       render: (_, record, index) => {
-        return <Row key={index}><Col span={5} offset={9}><EyeOutlined onClick={() => {
-
-          props.getDetail({ id: record.id })
-          setOpen(true)
-        }} style={{ color: "#2196f3", cursor: "pointer",fontSize:20 }} /></Col>
-        </Row>
-
-
+        return (
+          <Row key={index}>
+            <Col span={5} offset={9}>
+              <EyeOutlined
+                onClick={() => {
+                  props.getDetail({ id: record.id });
+                  setOpen(true);
+                }}
+                style={{ color: "#2196f3", cursor: "pointer", fontSize: 20 }}
+              />
+            </Col>
+          </Row>
+        );
       },
     },
   ];
   const onShowDetail = () => {
-    setOpen(!open)
-  }
+    setOpen(!open);
+  };
   const onClose = () => {
-    setOpen(false)
-    props.closeForm()
-  }
+    setOpen(false);
+    props.closeForm();
+  };
   React.useEffect(() => {
     // eslint-disable-next-line react/prop-types
-    if(location.search){
+    if (location.search) {
       const queryParams = new URLSearchParams(location.search);
-      const page =queryParams.get("page")
-      const limit =queryParams.get("limit")
-      const orderBy = queryParams.get("sort")
-      props.getReport({page,limit,orderBy})
-    }else{
-      props.getReport({ page: 1, limit: 10,orderBy:"ASC" })
+      const page = queryParams.get("page");
+      const limit = queryParams.get("limit");
+      const orderBy = queryParams.get("sort");
+      props.getReport({ page, limit, orderBy });
+    } else {
+      props.getReport({ page: 1, limit: 20, orderBy: "DESC" });
     }
-   
-  }, [location.search])
- 
+  }, [location.search]);
+
   const dataResource = React.useMemo(() => {
     return props.store.data.map((item, index) => {
       return {
         ...item,
         index: (props.store.page - 1) * props.store.limit + index + 1,
         full_name: `${item.firstName} ${item.last_name}`,
-        phone: item.phone ? item.phone: `_`
-      }
-    })
-  }, [props.store.data, props.store.limit, props.store.page])
-  const onSearch =(value) =>{ props.searchReport({page:1,limit:20,keySearch:value})}
-  const reloadData = ()=>{ props.getReport({page:1,limit:10,orderBy:"ASC"})}
-  const onSelect =(value)=>{ props.filterByReason(value)}
- const onFilter = (value)=>{props.getReport({...value,page:1,limit:10})}
+        phone: item.phone ? item.phone : `_`,
+      };
+    });
+  }, [props.store.data, props.store.limit, props.store.page]);
+
+
+  const [detail,setDetail] =React.useState({})
+
+  React.useEffect(()=>{
+    if(Object.keys(props.store.detail).length !== 0){
+     
+      setDetail(props.store.detail)
+    }
+  },[props.store])
+  const onSearch = (value) => {
+    props.searchReport({ page: 1, limit: 20, keySearch: value });
+  };
+
+  const reloadData = () => {
+    props.getReport({ page: 1, limit: 20, orderBy: "DESC" });
+  };
+
+  const onSelect = (value) => {
+    props.filterByReason(value);
+  };
+
+  const onFilter = (value) => {
+    props.getReport({ ...value, page: 1, limit: 20 });
+  };
+
   return (
     <div>
-    <Filter onSearch ={onSearch} reloadData={reloadData} isSearch={true} isNew={true} isReason={true} onSelect ={onSelect} onFilterTime={onFilter}/>
-      <DetailForm open={open} onOpen={onShowDetail} onClose={onClose} item={props.store.detail} title="DETAIL REPORT INFORMATION" />
-      <TableCommon columns={columns} pageSize={props.store.limit} totalPage={props.store.totalPage} data={dataResource}   />
+      <Filter
+        onSearch={onSearch}
+        reloadData={reloadData}
+        isSearch={true}
+        isNew={true}
+        isReason={true}
+        onSelect={onSelect}
+        onFilterTime={onFilter}
+      />
+      <DetailForm
+        open={open}
+        onOpen={onShowDetail}
+        onClose={onClose}
+        item={detail}
+        title="DETAIL REPORT INFORMATION"
+      />
+      <TableCommon
+        columns={columns}
+        pageSize={props.store.limit}
+        totalPage={props.store.totalPage}
+        data={dataResource}
+      />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    store: state.ReportReducer
+    store: state.ReportReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getReport: (data) => {
-      dispatch(actions.listReportRequest(data))
+      dispatch(actions.listReportRequest(data));
     },
-    filterByReason : (data)=>{
-      dispatch(actions.filterByReasonRequest(data))
+    filterByReason: (data) => {
+      dispatch(actions.filterByReasonRequest(data));
     },
-    searchReport: (data)=>{
-      dispatch(actions.searchReportRequest(data))
+    searchReport: (data) => {
+      dispatch(actions.searchReportRequest(data));
     },
     getDetail: (data) => {
-      dispatch(actions.detailReportRequest(data))
-    }, deleteReport: (data) => {
-      dispatch(actions.deleteReportRequest(data))
+      dispatch(actions.detailReportRequest(data));
+    },
+    deleteReport: (data) => {
+      dispatch(actions.deleteReportRequest(data));
     },
     closeForm: () => {
-      dispatch(actions.closeDetail())
-    }
+      dispatch(actions.closeDetail());
+    },
   };
 };
 

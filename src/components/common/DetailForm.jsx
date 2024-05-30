@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { CopyOutlined,ArrowLeftOutlined } from "@ant-design/icons";
-import { Col, Row, message, Drawer ,Select,Divider, Button} from "antd";
-import {  connect } from "react-redux";
-import {useNavigate} from "react-router-dom"
+import { CopyOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import { Col, Row, message, Drawer, Select, Divider, Button } from "antd";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as actions from "../../redux/reducers/Report";
+import * as actionsUser from "../../redux/reducers/User";
+import {reason_select} from "../../utilizings/array"
 import Cookies from "js-cookie";
 import "@/styles/Detail.scss";
 // eslint-disable-next-line react/prop-types
 export function DetailForm(props) {
   const { title = "DETAIL", item = {}, open, onClose } = props;
- const  [reasonBan,setReasonBan] = React.useState({
-    id:item.peer_id,
-    reason:0
- })
- const navigator = useNavigate()
+  const [dataBan, setDataBan] = React.useState({
+    peer_id: item.peer_id || 0,
+    reason: -1,
+    phone: item.phone ||"",
+    ban: 1,
+  });
+  const navigator = useNavigate();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
- 
+
   const [messageApi, contextHolder] = message.useMessage();
 
   const DrawerLevel2 = () => {
@@ -65,16 +69,13 @@ export function DetailForm(props) {
       </Drawer>
     );
   };
-  const options =[{
-    label:"Spam",
-    value:0
-  },{
-    label:"Tin rác",
-    value:1
-  }]
-  const handleSelect =(value)=>{
- console.log(value)
-  }
+ 
+  const handleSelect = (value) => {
+    
+    setDataBan(preData=>({...preData,reason:value}))
+  };
+ 
+ 
   return (
     <div>
       {contextHolder}
@@ -127,23 +128,25 @@ export function DetailForm(props) {
             }}
           >
             {" "}
-            xem chi tiết bí danh và tài khoản cùng số điện thoại <ArrowLeftOutlined style={{marginLeft:10}} />
+            xem chi tiết bí danh và tài khoản cùng số điện thoại{" "}
+            <ArrowLeftOutlined style={{ marginLeft: 10 }} />
           </Col>
         </Row>
         <Row className="row">
           <Col
             className="detail"
             onClick={() => {
-             onClose();
-             navigator(`/report/user/${item.peer_id}`)
+              onClose();
+              navigator(`/report/user/${item.peer_id}`);
             }}
           >
             {" "}
-            xem chi tiết danh sách thông tin báo cáo với tài khoản  <ArrowLeftOutlined style={{marginLeft:10}} />
+            xem chi tiết danh sách thông tin báo cáo với tài khoản{" "}
+            <ArrowLeftOutlined style={{ marginLeft: 10 }} />
           </Col>
         </Row>
         {DrawerLevel2()}
-        <Divider/>
+        <Divider />
         <Row>
           <h3 className="title">Chọn lí do cấm:</h3>
           <Select
@@ -152,13 +155,36 @@ export function DetailForm(props) {
             }}
             placeholder="Chọn lí do ban"
             onChange={handleSelect}
-            options={options}
+            options={reason_select}
           />
         </Row>
         <div className="note">
-          Warning:  Lệnh ban được thực thi bởi {Cookies.get("account")|| "admin hệ thống"}, các tài khoản có cùng số điện thoại sẽ bị cấm theo, thông tin sẽ được xác thực bởi hệ thống
+          Warning: Lệnh ban được thực thi bởi{" "}
+          {Cookies.get("account") || "admin hệ thống"}, các tài khoản có cùng số
+          điện thoại sẽ bị cấm , thông tin sẽ được xác thực bởi hệ thống
         </div>
-        <Button  type="primary">Thực hiện Ban</Button>
+        <Button
+          type="primary"
+          onClick={(e) => {
+            if (dataBan.reason < 0) {
+              messageApi.open({
+                type: "error",
+                content: "chọn lí do ban",
+              });
+              e.preventDefault();
+            } else if(dataBan.id ==0){
+              messageApi.open({
+                type: "error",
+                content: "user chưa xác định",
+              });
+              e.preventDefault();
+            }else  {
+              props.banUser(dataBan);
+            }
+          }}
+        >
+          Thực hiện Ban
+        </Button>
       </Drawer>
     </div>
   );
@@ -180,6 +206,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     closeDetailLinkAndAccount: () => {
       dispatch(actions.closeDetailLinkAndLink());
+    },
+    banUser: (data) => {
+      dispatch(actionsUser.unBanUserRequest(data));
     },
   };
 };

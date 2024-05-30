@@ -23,6 +23,27 @@ function* listReportSaga({ payload }) {
   }
 }
 
+
+function* searchReportSaga({payload}){
+  try {
+    const res = yield searchReport(payload);
+    if (res.status == 0) {
+      yield put(actions.requestFailure(res.message));
+    } else {
+      yield put(
+        actions.searchReportSuccess({
+          data: res.response.data,
+          limit: res.response.limit,
+          page: res.response.page,
+          totalPage: res.response.totalPage,
+          keySearch:payload.keySearch
+        })
+      );
+    }
+  } catch (error) {
+    yield put(actions.requestFailure(error));
+  }
+}
 function* detailReportSaga({ payload }) {
   try {
     const res = yield detailReport(payload);
@@ -128,6 +149,7 @@ const reportSaga = [
   takeEvery(actions.detailLinkReportedRequest.type,detailLinkReportedSaga),
   takeLatest(actions.filterByReasonRequest.type,filterByReasonSaga),
   takeLatest(actions.tickNewsReportRequest.type,tickReadReportSaga),
-  takeLatest(actions.accessReportRequest.type,accessReportSaga)
+  takeLatest(actions.accessReportRequest.type,accessReportSaga),
+  takeLatest(actions.searchReportRequest.type,searchReportSaga)
 ];
 export default reportSaga;

@@ -8,7 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useCookie("user", null);
-    console.log("🚀 ~ AuthProvider ~ user:", user)
+
   
     const navigate = useNavigate();
    

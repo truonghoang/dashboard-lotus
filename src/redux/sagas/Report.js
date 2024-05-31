@@ -68,7 +68,7 @@ function* detailReportSaga({ payload }) {
 
 function* detailLinkReportedSaga({payload} ) {
     try {
-        console.log("payload",payload)
+      
       const res = yield getListLinkOfAccount(payload);
       if (res.code == 0) {
         yield put(actions.requestFailure(res.message));

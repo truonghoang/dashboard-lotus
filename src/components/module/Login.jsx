@@ -41,7 +41,7 @@ function Login(props) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.email ? (
+        {formik.touched.email && formik.errors.email ? (
           <p className="err">{formik.errors.email}</p>
         ) : (
           <p></p>
@@ -54,7 +54,7 @@ function Login(props) {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
-        {formik.touched.password ? (
+        {formik.touched.password && formik.errors.password ? (
           <p className="err">{formik.errors.password}</p>
         ) : (
           <p></p>

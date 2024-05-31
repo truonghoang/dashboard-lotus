@@ -18,7 +18,7 @@ export function DetailForm(props) {
   const [childrenDrawer, setChildrenDrawer] = useState(false);
   
   const [messageApi, contextHolder] = message.useMessage();
-  console.log(item,dataBan)
+
 
  React.useEffect(()=>{
  if(item.id!=dataBan.peer_id){

@@ -122,7 +122,7 @@ export const ReportTable = (props) => {
   const onFilter = (value) => {
     props.getReport({ ...value, page: 1, limit: 20 });
   };
- console.log(detail)
+
   return (
     <div>
       <Filter

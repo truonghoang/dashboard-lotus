@@ -133,7 +133,7 @@ export const UserTable = (props) => {
     props.listUserBanned({ ...value, page: 1, limit: 10, ban: 1 });
   };
 
-  console.log(dataBan);
+ 
   return (
     <div>
       <Filter

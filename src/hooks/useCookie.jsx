@@ -6,7 +6,7 @@ export const useCookie = (keyName, defaultValue) => {
     try {
       const value = jsCookie.get(keyName);
       const userReducer = useSelector((state) => state.UserReducer);
-      console.log(userReducer);
+    
       if (value) {
         return JSON.parse(value);
       } else {

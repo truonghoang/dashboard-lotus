@@ -1,12 +1,12 @@
 import Cookies from 'js-cookie';
 let baseURL;
 if (process.env.NODE_ENV == 'production') {
-  baseURL = 'https://adminplayer.sohatv.vn';
+  baseURL = 'http://localhost:8081';
 } else if (process.env.NODE_ENV == 'development') {
 
-  baseURL ='http://localhost:80'
+  baseURL ='http://localhost:8081'
 } else {
-    baseURL = 'http://localhost:80';
+    baseURL = 'http://localhost:8081';
 
 }
 const handleResult = (data) => {

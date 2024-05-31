@@ -11,16 +11,26 @@ import "@/styles/Detail.scss";
 // eslint-disable-next-line react/prop-types
 export function DetailForm(props) {
   const { title = "DETAIL", item = {}, open, onClose } = props;
+
   const [dataBan, setDataBan] = React.useState({
-    peer_id: item.peer_id || 0,
-    reason: -1,
-    phone: item.phone ||"",
-    ban: 1,
   });
   const navigator = useNavigate();
   const [childrenDrawer, setChildrenDrawer] = useState(false);
-
+  
   const [messageApi, contextHolder] = message.useMessage();
+  console.log(item,dataBan)
+
+ React.useEffect(()=>{
+ if(item.id!=dataBan.peer_id){
+  setDataBan({
+    peer_id: item.id,
+    reason: -1,
+    phone: item.phone|| "",
+    ban:1
+  })
+ }
+ },[item])
+
 
   const DrawerLevel2 = () => {
     return (

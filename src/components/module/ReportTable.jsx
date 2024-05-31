@@ -44,7 +44,7 @@ export const ReportTable = (props) => {
       key: "created_at",
     },
     {
-      title: "Chức Năng",
+      title: "Xem Chi Tiết",
       align: "center",
       dataIndex: "action",
       key: "action",
@@ -55,6 +55,7 @@ export const ReportTable = (props) => {
               <EyeOutlined
                 onClick={() => {
                   props.getDetail({ id: record.id });
+                  setDetail(preData =>({...preData,id:record.peer_id}))
                   setOpen(true);
                 }}
                 style={{ color: "#2196f3", cursor: "pointer", fontSize: 20 }}
@@ -69,6 +70,7 @@ export const ReportTable = (props) => {
     setOpen(!open);
   };
   const onClose = () => {
+    setDetail({})
     setOpen(false);
     props.closeForm();
   };
@@ -102,7 +104,7 @@ export const ReportTable = (props) => {
   React.useEffect(()=>{
     if(Object.keys(props.store.detail).length !== 0){
      
-      setDetail(props.store.detail)
+      setDetail(preData=>({...preData,...props.store.detail}))
     }
   },[props.store])
   const onSearch = (value) => {
@@ -120,7 +122,7 @@ export const ReportTable = (props) => {
   const onFilter = (value) => {
     props.getReport({ ...value, page: 1, limit: 20 });
   };
-
+ console.log(detail)
   return (
     <div>
       <Filter

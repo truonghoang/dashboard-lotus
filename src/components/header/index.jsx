@@ -10,6 +10,9 @@ import {useNavigate} from "react-router-dom"
     const navigate = useNavigate()
   return (
     <div className='wrap-header'>
+    <Button type='primary' className='btn-back' onClick={()=>{
+      navigate(-1)
+    }}>Quay lại trang trước</Button>
       <Button className='btn-logout' onClick={()=>{ 
         jsCookie.remove("user");
         jsCookie.remove("account")
